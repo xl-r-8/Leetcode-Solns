@@ -34,11 +34,6 @@ public:
             }
             // i=p.back();
             // p.erase(p.begin()+p.size()-1);
-            // gfhjsokjgj
-            // gfsdgjohesdfjghfbvj
-            // njfsgojhg'
-            // gfjnsjogsf
-            // gjnosfs
             i=farthest;
        }
        return false;
