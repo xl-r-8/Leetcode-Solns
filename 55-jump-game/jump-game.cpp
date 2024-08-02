@@ -1,7 +1,6 @@
 class Solution {
 public:
     bool canJump(vector<int>& nums) {
-        // vector<int> p;
         int farthest=-1;
         int i=0;
         while (i<nums.size()){
