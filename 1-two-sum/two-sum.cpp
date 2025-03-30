@@ -23,23 +23,42 @@ public:
         // return ans;
 
         //M2: better
-        vector<vector<int>>v;
+        // vector<vector<int>>v;
+        // vector<int> ans;
+        // for(int i=0; i<nums.size();i++){
+        //     v.push_back({nums[i],i});
+        // }
+        // sort(v.begin(),v.end(),comparator);
+        // int i=0; int j=v.size()-1;
+        // while(i<j){
+        //     if(v[i][0]+v[j][0]<target) i++;
+        //     else if(v[i][0]+v[j][0]>target) j--;
+        //     else {
+        //         ans.push_back(v[i][1]);
+        //         ans.push_back(v[j][1]);
+        //         break;
+        //         }
+        // }
+        // return ans;
+
+        //M3:best
+        unordered_map<int,int> mp;
         vector<int> ans;
         for(int i=0; i<nums.size();i++){
-            v.push_back({nums[i],i});
+            mp[nums[i]]=i;
         }
-        sort(v.begin(),v.end(),comparator);
-        int i=0; int j=v.size()-1;
-        while(i<j){
-            if(v[i][0]+v[j][0]<target) i++;
-            else if(v[i][0]+v[j][0]>target) j--;
-            else {
-                ans.push_back(v[i][1]);
-                ans.push_back(v[j][1]);
+        for (int i = 0; i < nums.size(); i++) {
+            int complement = target - nums[i];
+            
+            //find basically just checks ki complement is present as a key or not in hash map that's why it's O(1)
+            if (mp.find(complement) != mp.end() && mp[complement] != i) {
+                ans.push_back(i);
+                ans.push_back(mp[complement]);
                 break;
-                }
+            }
         }
         return ans;
+
                                                                                         
     }
 };
