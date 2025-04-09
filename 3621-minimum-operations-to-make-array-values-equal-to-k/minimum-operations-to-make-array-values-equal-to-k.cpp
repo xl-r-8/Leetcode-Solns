@@ -4,7 +4,8 @@ public:
         unordered_map<int,int> mp;
         int smallest=nums[0];
         for(int ele: nums){
-            mp[ele]++;
+            // mp[ele]++;
+            mp[ele]=1;
             smallest=min(smallest,ele);
         }
         if(smallest < k) return -1;
