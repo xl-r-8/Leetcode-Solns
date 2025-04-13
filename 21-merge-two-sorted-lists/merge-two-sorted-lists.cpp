@@ -10,35 +10,67 @@
  */
 class Solution {
 public:
-    void addNode(ListNode*&head,int data){
-        ListNode* p=new ListNode(data);
-        if(head==nullptr) {
-            head=p;return;
-        }
-        ListNode* temp=head;
-        while(temp->next!=nullptr) temp=temp->next;
-        temp->next=p; p->next=nullptr;
-    }
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        ListNode* list3=nullptr;
-        while(list1!=nullptr and list2!=nullptr){
-            if(list1->val<=list2->val){
-                addNode(list3,list1->val);
-                list1=list1->next;
+        ListNode* head=nullptr;
+        if(list1==nullptr and list2==nullptr) return head;
+        if(list1==nullptr) return list2;
+        if(list2==nullptr) return list1;
+        ListNode* temp1=list1;
+        ListNode* temp2=list2;
+        ListNode* temp=nullptr;
+        while(temp1!=nullptr and temp2!=nullptr){
+            if(temp1->val<=temp2->val){
+                ListNode* p=new ListNode(temp1->val);
+                if(head==nullptr){
+                    head=p;
+                    temp=head;
+                }
+                else{
+                    temp->next=p;
+                    temp=temp->next;
+                }
+                temp1=temp1->next;
             }
-            else{ 
-                addNode(list3,list2->val);
-                list2=list2->next;    
+            else{
+                ListNode* p=new ListNode(temp2->val);
+                if(head==nullptr){
+                    head=p;
+                    temp=head;
+                }
+                else{
+                    temp->next=p;
+                    temp=temp->next;
+                }
+                temp2=temp2->next;
             }
         }
-        while(list1!=nullptr ){
-            addNode(list3,list1->val);
-            list1=list1->next;
+
+        while(temp1!=nullptr){
+            ListNode* p=new ListNode(temp1->val);
+            if(head==nullptr){
+                head=p;
+                temp=head;
+            }
+            else{
+                temp->next=p;
+                temp=temp->next;
+            }
+            temp1=temp1->next;
         }
-        while(list2!=nullptr ){
-            addNode(list3,list2->val);
-            list2=list2->next;   
+
+        while(temp2!=nullptr){
+            ListNode* p=new ListNode(temp2->val);
+            if(head==nullptr){
+                head=p;
+                temp=head;
+            }
+            else{
+                temp->next=p;
+                temp=temp->next;
+            }
+            temp2=temp2->next;
         }
-        return list3;
+
+        return head;
     }
 };
