@@ -44,33 +44,40 @@ public:
                 temp2=temp2->next;
             }
         }
+        
+        //M1: while loop
+        // while(temp1!=nullptr){
+        //     ListNode* p=new ListNode(temp1->val);
+        //     if(head==nullptr){
+        //         head=p;
+        //         temp=head;
+        //     }
+        //     else{
+        //         temp->next=p;
+        //         temp=temp->next;
+        //     }
+        //     temp1=temp1->next;
+        // }
 
-        while(temp1!=nullptr){
-            ListNode* p=new ListNode(temp1->val);
-            if(head==nullptr){
-                head=p;
-                temp=head;
-            }
-            else{
-                temp->next=p;
-                temp=temp->next;
-            }
-            temp1=temp1->next;
+        // while(temp2!=nullptr){
+        //     ListNode* p=new ListNode(temp2->val);
+        //     if(head==nullptr){
+        //         head=p;
+        //         temp=head;
+        //     }
+        //     else{
+        //         temp->next=p;
+        //         temp=temp->next;
+        //     }
+        //     temp2=temp2->next;
+        // }
+
+        //M2: direct if-else
+        if (temp1 != nullptr) {
+            temp->next = temp1;
+        } else {
+            temp->next = temp2;
         }
-
-        while(temp2!=nullptr){
-            ListNode* p=new ListNode(temp2->val);
-            if(head==nullptr){
-                head=p;
-                temp=head;
-            }
-            else{
-                temp->next=p;
-                temp=temp->next;
-            }
-            temp2=temp2->next;
-        }
-
         return head;
     }
 };
