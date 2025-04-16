@@ -1,13 +1,28 @@
 class Solution {
 public:
     vector<vector<int>> generate(int numRows) {
+        //M1:brute force
+        // vector<vector<int>> ans;
+        // for(int i=0; i<numRows; i++){
+        //     vector<int> v(i+1,0);
+        //     for(int j=0; j<=i;j++){
+        //         if(j==0 || j==i)v[j]=1;
+        //         else{
+        //             v[j]=ans[i-1][j-1]+ans[i-1][j];
+        //         }
+        //     }
+        //     ans.push_back(v);
+        // }
+        // return ans;
+
+        //M2: PnC
         vector<vector<int>> ans;
         for(int i=0; i<numRows; i++){
             vector<int> v(i+1,0);
             for(int j=0; j<=i;j++){
                 if(j==0 || j==i)v[j]=1;
                 else{
-                    v[j]=ans[i-1][j-1]+ans[i-1][j];
+                    v[j]=(long long)((i-(j-1))*(v[j-1]))/((j-1)+1);
                 }
             }
             ans.push_back(v);
