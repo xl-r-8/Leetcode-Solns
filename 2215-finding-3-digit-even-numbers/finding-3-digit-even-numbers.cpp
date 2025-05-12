@@ -18,9 +18,10 @@ public:
             }
 
             int o=i-100*h-10*t; //eg: 235-200-30=5
-            if(mp[o]==0 or o%2==1){
-                if(o%2) i++;
-                else i+=2;
+            if(mp[o]==0 ){//or o%2==1
+                // if(o%2) i++;
+                // else i+=2;
+                i+=2;
                 continue;
             }
             // Check if the digits are not overused
