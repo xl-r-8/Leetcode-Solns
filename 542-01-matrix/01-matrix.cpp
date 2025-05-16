@@ -1,4 +1,3 @@
-
 class Solution {
 public:
     vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
@@ -19,19 +18,16 @@ public:
         // Directions for moving up, down, left, right
         vector<pair<int, int>> directions = {{-1,0}, {1,0}, {0,-1}, {0,1}};
         while (!q.empty()){
-            auto [i, j] = q.front();
-            q.pop();
-
-            for (auto [di, dj] : directions) {
-                int ni = i + di, nj = j + dj;
-                // If in bounds and not visited
-                if (ni >= 0 && nj >= 0 && ni < m && nj < n && lvl[ni][nj] == -1) {
-                    lvl[ni][nj] = lvl[i][j] + 1;
-                    q.push({ni, nj});
-                }
+            auto p=q.front(); q.pop();
+            int pi=p.first; int pj=p.second;
+            for(auto ele: directions){
+                int ni=pi + ele.first;
+                int nj=pj+ele.second;
+                if(ni<0 or nj<0 or ni>=m or nj>=n or lvl[ni][nj]!=-1) continue;
+                lvl[ni][nj]=lvl[pi][pj]+1;
+                q.push({ni,nj});
             }
         }
-        
         return lvl;
     }
 };
