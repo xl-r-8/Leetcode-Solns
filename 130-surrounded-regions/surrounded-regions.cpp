@@ -1,69 +1,40 @@
-void dfsrec(vector<vector<char>>& grid, vector<vector<bool>>& check, int i, int j, bool &boundary) {
-    int m = grid.size();
-    int n = grid[0].size();
-    
-    if (i < 0 || j < 0 || i >= m || j >= n || check[i][j] || grid[i][j] == 'X') return;
-
-    check[i][j] = true;
-    
-
-    if (i == 0 || i == m - 1 || j == 0 || j == n - 1) boundary = true;
-
-    dfsrec(grid, check, i, j - 1, boundary); // left
-    dfsrec(grid, check, i, j + 1, boundary); // right
-    dfsrec(grid, check, i - 1, j, boundary); // up
-    dfsrec(grid, check, i + 1, j, boundary); // down
-
-}
-
-
 class Solution {
 public:
+    void dfs(vector<vector<char>>& board, int i, int j){
+        if(i<0 || i>=board.size() || j < 0 || j>=board[0].size() || board[i][j]!='O'){
+            return;
+        }
+
+        board[i][j] = '#';
+        dfs(board, i-1, j);
+        dfs(board, i+1, j);
+        dfs(board, i, j-1);
+        dfs(board, i, j+1);
+    }
     void solve(vector<vector<char>>& board) {
-        int m = board.size();
-        int n = board[0].size();
-        vector<vector<bool>> check(m, vector<bool>(n, false));
+        int n = board.size();
+        int m = board[0].size();
+        //BETTER SC, coz no need of check vector
 
-        //running on the boundaries
-        for (int i = 0; i < m; i++) {
-            if(i==0 or i==m-1){
-                for (int j = 0; j < n; j++) {
-                    if (!check[i][j]) {
-                        bool boundary = false;
+        for(int i = 0; i<n; i++){
+            dfs(board, i,0);
+            dfs(board, i, m-1);
+        }
+        for(int j = 1; j<m-1; j++){
+            dfs(board, 0, j);
+            dfs(board, n-1, j);
+        }
 
-                        if (board[i][j] == 'X') {
-                            check[i][j] = true;
-                        } else {
-                            dfsrec(board, check, i, j, boundary);
-                        }
-                    }
+        for(int i = 0; i<n; i++){
+            for(int j = 0; j<m; j++){
+                if(board[i][j]=='#'){
+                    board[i][j] = 'O';
                 }
-            }
-            else{
-                vector<int> jboundary={0,n-1};
-                for(int j:jboundary){
-                    if (!check[i][j]) {
-                        int count = 0;
-                        bool boundary = false;
-
-                        if (board[i][j] == 'X') {
-                            check[i][j] = true;
-                        } else {
-                            dfsrec(board, check, i, j, boundary);
-                        }
-                    }
+                else if(board[i][j] == 'O'){
+                    board[i][j] = 'X';
                 }
             }
         }
-
-        for (int i = 0; i < m; i++) {
-            if(i==0 or i==m-1) continue;
-            for (int j = 0; j < n; j++) {
-                if(j==0 or j==n-1)continue;
-                if (!check[i][j] and board[i][j]=='O') {
-                    board[i][j]='X';
-                }
-            }
-        }
+        
     }
 };
