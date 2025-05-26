@@ -37,19 +37,82 @@ bool dfs(int node, vector<vector<int>>&adjl, vector<bool>&vis, vector<bool>& pat
 class Solution {
 public:
     vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+        //=================================dfs==========================================
+        // int n=graph.size();
+        // vector<bool> vis(n,false); // can we replace vis, coz safe=-1 can be used to store not visited???
+        // vector<int> safe(n,-1);
+        // vector<bool> pathvis(n, false);
+        // for(int i=0; i<n; i++){
+        //     if(!vis[i]){
+        //         dfs(i,graph,vis,pathvis,safe); 
+        //     }
+        // }
+        // vector<int> ans;
+        // for(int i=0; i<n; i++){
+        //     if(safe[i]==1) ans.push_back(i);
+        // }
+        // return ans;
+
+        //==================================bfs==================================
+
+        // int n=graph.size();
+        // queue<int> q;
+        // vector<int> ans;
+        // vector<int> outdegree(n,0);
+
+        // for(int i=0; i<n; i++){
+        //     outdegree[i]=graph[i].size();
+        // }
+
+        // for(int i=0; i<n; i++){
+        //     if(outdegree[i]==0) q.push(i);
+        // }
+        
+        // //TC: of while loop: O(V), coz V vertices will go into q at max
+        // // and for every vertex, V^2 for loop will run: Total TC: O(V^3)
+        // while(!q.empty()){
+        //     int node=q.front(); q.pop();
+        //     ans.push_back(node);
+        //     //TC of for loops: O(V^2)
+        //     for(int i=0; i<n;i++){
+        //         for(int temp: graph[i]){//coz of this for loop TC has increases
+        //             if(temp==node){
+        //                 outdegree[i]--;
+        //                 if(outdegree[i]==0) q.push(i);
+        //                 break;
+        //             } 
+        //         }
+        //     }
+        // }
+        // sort(ans.begin(), ans.end());
+        // return ans;
+
         int n=graph.size();
-        vector<bool> vis(n,false);
-        vector<int> safe(n,-1);
-        vector<bool> pathvis(n, false);
-        for(int i=0; i<n; i++){
-            if(!vis[i]){
-                dfs(i,graph,vis,pathvis,safe); 
+        queue<int> q;
+        vector<int> ans;
+        vector<int> indegree(n,0);//according to revgraph
+        vector<vector<int>> revgraph(n);
+
+        for(int u=0; u<n; u++){
+            for (int v: graph[u]){//in graph, edge: u->v
+                revgraph[v].push_back(u);//in graph, edge: v->u
+                indegree[u]++;
             }
         }
-        vector<int> ans;
+
         for(int i=0; i<n; i++){
-            if(safe[i]==1) ans.push_back(i);
+            if(indegree[i]==0) q.push(i);
         }
+        
+        while(!q.empty()){
+            int ele=q.front(); q.pop();
+            ans.push_back(ele);
+            for(int neighbor: revgraph[ele]){
+                indegree[neighbor]--;
+                if(indegree[neighbor]==0) q.push(neighbor);
+            }
+        }
+        sort(ans.begin(),ans.end());
         return ans;
     }
 };
