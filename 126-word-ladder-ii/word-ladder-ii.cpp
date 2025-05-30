@@ -1,7 +1,8 @@
-void dfs(string node, string& endWord, unordered_map<string,int>& mp,vector<string> list, vector<vector<string>>& ans){
+void dfs(string node, string& beginWord, unordered_map<string,int>& mp,vector<string> list, vector<vector<string>>& ans){
     list.push_back(node);
-    if(node==endWord){//base case
+    if(node==beginWord){//base case
         // cout<<node<<endl;
+        reverse(list.begin(),list.end());
         ans.push_back(list);
         return;
     }
@@ -13,7 +14,7 @@ void dfs(string node, string& endWord, unordered_map<string,int>& mp,vector<stri
             if(mp.find(neighbor) != mp.end()){
                 if(mp[neighbor]==mp[node]-1){
                     // cout<<" neighbor "<<neighbor<<endl;
-                    dfs(neighbor,endWord,mp,list,ans);
+                    dfs(neighbor,beginWord,mp,list,ans);
                 }
             }
         }
@@ -28,17 +29,17 @@ public:
         unordered_set<string> dict(wordList.begin(), wordList.end());
 
         if (!dict.count(endWord)) return ans; // early check
-        q.push(endWord);
-        dict.erase(endWord);
-        if (!dict.count(beginWord)) dict.insert(beginWord);//add beginWord to the set
+        q.push(beginWord);
+        if (dict.find(beginWord) != dict.end())dict.erase(beginWord);
 
         unordered_map<string,int> mp;
-        mp[endWord]=0;
+        mp[beginWord]=0;
 
         while(!q.empty()){
             string node = q.front(); q.pop();
             for(int i=0; i<node.size();i++){
                 string neighbor=node;
+                if(node==endWord) break;
                 for(char ch='a';ch<='z';ch++){
                     neighbor[i]=ch;
                     if (dict.find(neighbor) != dict.end()) {
@@ -49,11 +50,8 @@ public:
                 }
             }
         }
-        // for(pair<string,int>p: mp){
-        //     cout<<p.first<<":"<<p.second<<endl;
-        // }
         vector<string>list;
-        dfs(beginWord,endWord,mp,list,ans);
+        dfs(endWord,beginWord,mp,list,ans);
         return ans;
     }
 };
