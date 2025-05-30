@@ -45,6 +45,7 @@ public:
                     if (dict.find(neighbor) != dict.end()) {
                         dict.erase(neighbor);//we just need to know the level of each word and since each word appears at exactly 1 level, so agar 1 level pe usko ek baar bhi mark kar liya to chalta hai we dont need to visit it again and again at the same level just coz there exist multiple paths that contains it
                         mp[neighbor]=mp[node]+1;
+                        if(neighbor==endWord) break;
                         q.push(neighbor);
                     }
                 }
