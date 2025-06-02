@@ -13,7 +13,7 @@ public:
             while(i<n and nums[i]!=val){
                 i++;
             }
-            if(i>j or i>=n or j<0){
+            if(i>j ){
                 break;
             }
             count++;//nums[i]==val
