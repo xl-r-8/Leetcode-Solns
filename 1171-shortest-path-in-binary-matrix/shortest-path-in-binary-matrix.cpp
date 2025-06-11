@@ -24,6 +24,7 @@ public:
                 if(xi<0 or xi>=n or yj<0 or yj>=n or visited[xi][yj] or grid[xi][yj]==1)continue;
                 visited[xi][yj] = true;
                 dist[xi][yj]=distance+1;
+                if(xi==n-1 and yj==n-1) return dist[xi][yj];
                 q.push({xi,yj,distance+1});
                 
             }
