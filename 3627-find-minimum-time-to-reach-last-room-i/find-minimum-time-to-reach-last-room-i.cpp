@@ -18,7 +18,7 @@ public:
             vector<int> ele=pq.top();
             pq.pop();
             int i=ele[0], j=ele[1], eleC=ele[2];
-            // if(i==n-1 and j==m-1) return cost[n-1][m-1];
+            if(i==n-1 and j==m-1) return cost[n-1][m-1];
             for(vector<int> temp : dirns){
                 int xi=i+temp[0];
                 int yj=j+temp[1];
@@ -32,7 +32,7 @@ public:
 
                 if(cst<cost[xi][yj] or cost[xi][yj]==-1){
                     cost[xi][yj]=cst;
-                    // if(xi==n-1 and yj==m-1) return cost[n-1][m-1];
+                    if(xi==n-1 and yj==m-1) return cost[n-1][m-1];
                     pq.push({xi,yj,cst});
                 }
                 
