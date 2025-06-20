@@ -5,7 +5,7 @@ bool cmp(string a, string b) {
 class Solution {
 public:
     string longestCommonPrefix(vector<string>& v) {
-        sort(v.begin(), v.end(), cmp);
+        sort(v.begin(), v.end());
         string first=v[0]; int sz=first.size();
         int ind=200; //Max length of string is 200
         for(int i=1; i<v.size(); i++){
