@@ -1,24 +1,16 @@
 class Solution {
 public:
-    vector<string> divideString(string s, int k, char fill) {
-        int count=k; vector<string> ans; string temp="";
-        for(int i=0; i<s.size();i++){
-            temp+=s[i];
-            count--;
-            if(count==0){
-                ans.push_back(temp);
-                count=k;
-                temp="";
-            }
+    vector<string> divideString(string &s, int k, char fill) {
+        auto [q, r]=div(s.size(), k); //q=quotient and r=remainder
+        vector<string> ans(q+(r>0)); //size of ans=q when r is 0 otherwise size=r+1
+        // s = "abcdefghij", k = 3, fill = "x"
+        for (int i=0; i<q; i++){
+            ans[i]=s.substr(i*k, k);
         }
-        while(count>0 and count!=k){//count!=k coz if count==k then temp="" i.e. count and temp reset ho kar aaye hai and string ke saare chars already ans mein included hai
-            temp+=fill;
-            count--;
-            if(count==0){
-                ans.push_back(temp);
-                // count=k; //if i reset the count each time it reaches 0 then while loop will never end
-                // temp="";
-            }
+        //ans=["abc","def","ghi"]
+        if (r>0){
+            ans.back()=s.substr(q*k,s.size()-q*k);//or simply s.substr(q*k), it will create a substring from index=q*k to the last index => ans=["abc","def","ghi","j"]
+            ans.back()+=string(k-r, fill);//ans=["abc","def","ghi","jxx"]
         }
         return ans;
     }
