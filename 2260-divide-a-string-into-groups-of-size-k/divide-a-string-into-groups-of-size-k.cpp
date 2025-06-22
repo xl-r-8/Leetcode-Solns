@@ -11,7 +11,7 @@ public:
                 temp="";
             }
         }
-        while(count>0 and count!=k){
+        while(count>0 and count!=k){//count!=k coz if count==k then temp="" i.e. count and temp reset ho kar aaye hai and string ke saare chars already ans mein included hai
             temp+=fill;
             count--;
             if(count==0){
