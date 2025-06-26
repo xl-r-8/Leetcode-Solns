@@ -1,3 +1,19 @@
+#define ll long long
+ll power(ll a, ll n) {
+    ll res = 1;
+    while (n) {
+        if (n % 2 == 1){
+            res = (res * a);
+            n--;
+        } 
+        else{
+            a = (a*a);
+            n = n/2;
+        }
+    }
+    return res;
+}
+
 void pnotp(int i, vector<int>v, int& ans, int xorTotal){
     if(i>=v.size()){
         ans+=xorTotal;
@@ -14,8 +30,15 @@ void pnotp(int i, vector<int>v, int& ans, int xorTotal){
 class Solution {
 public:
     int subsetXORSum(vector<int>& nums) {
+        // int ans=0;
+        // pnotp(0,nums,ans,0);
+        // return ans;
         int ans=0;
-        pnotp(0,nums,ans,0);
-        return ans;
+        int n=nums.size();
+        for(int ele:nums){
+            ans= ans | ele;//just mark all the 1 bits in nums as on in ans
+        }
+
+        return ans*power(2,n-1);
     }
 };
