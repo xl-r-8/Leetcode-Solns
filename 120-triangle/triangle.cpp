@@ -17,7 +17,13 @@ public:
         int n=triangle.size();
         //Memoization
         //M1: dp of size (n)^2
-        vector<vector<int>> dp(n, vector<int> (n,1e9));
+        // vector<vector<int>> dp(n, vector<int> (n,1e9));
+        //M2: dp of size(1+2+...+n = n(n+1)/2)
+        vector<vector<int>> dp;
+        for(int i=1; i<=n; i++){
+            vector<int> v(i,1e9);
+            dp.push_back(v);
+        }
         return rec(0,0,triangle,dp);
 
 
