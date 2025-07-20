@@ -25,7 +25,39 @@ class Solution {
 public:
     int cherryPickup(vector<vector<int>>& grid) {
         int m=grid.size(); int n=grid[0].size();
-        vector<vector<vector<int>>>dp(m,vector<vector<int>>(n, vector<int>(n,-1)));
-        return rec(0,0,n-1,dp,grid);
+
+        //Memoization
+        // vector<vector<vector<int>>>dp(m,vector<vector<int>>(n, vector<int>(n,-1)));
+        // return rec(0,0,n-1,dp,grid);
+
+
+        //tabulation
+        vector<vector<int>> dp(n, vector<int>(n,0));
+        for(int i=m-1; i>=0; i--){
+            vector<vector<int>> temp(n, vector<int>(n,0));
+            for(int j1=0; j1<n;j1++){
+                for(int j2=0; j2<n;j2++){
+                    int addition=0;
+                    if(j1==j2)addition=grid[i][j1];
+                    else addition=grid[i][j1]+grid[i][j2];
+
+                    vector<int> ind={-1,0,1};
+                    int maxval=0;
+                    for(int a: ind){
+                        int j1ind=j1+a;
+                        if(j1ind<0 or j1ind>=n) continue;
+                        for(int b:ind){
+                            int j2ind=j2+b;
+                            if( j2ind<0 or j2ind>=n) continue;
+                            maxval=max(maxval,dp[j1ind][j2ind]);
+                        }
+                    }
+                    temp[j1][j2]=addition+maxval;
+                }
+            }
+            dp=temp;
+        }
+
+        return dp[0][n-1];
     }
 };
