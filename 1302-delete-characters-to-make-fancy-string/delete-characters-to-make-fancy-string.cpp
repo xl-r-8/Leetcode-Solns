@@ -4,6 +4,7 @@ public:
         int count=1;
         char ch=s[0];
         string ans="";
+        // cout<<1;
         ans+=ch;
         for(int i=1; i<s.size();i++){
             if(s[i]==ch){
