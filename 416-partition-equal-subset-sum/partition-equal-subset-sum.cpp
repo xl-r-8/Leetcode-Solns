@@ -10,6 +10,9 @@ public:
        if(sum%2!=0)return false;   
        int k= sum/2; // if you can just find a subset that can make sum/2, then the other elements left in the set will also have to add up to sum/2 coz totalsum=sum
 //{a1,a2,a3,...,an},where a1+a2+...+an=2k=syn since it is a set, say a1+a2+a3+...+ai=k without the loss of generality therefore ai+...+an=k, and hence we can partition the set into 2 subsets of equal sum
+//take 2, action!
+//take 3, action!
+//take 4, action!
         int n=nums.size();
        vector<bool> dp(k+1,false);
         dp[0]=true;
