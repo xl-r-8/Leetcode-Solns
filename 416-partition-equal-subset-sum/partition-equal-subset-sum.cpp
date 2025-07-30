@@ -14,6 +14,8 @@ public:
 //take 3, action!
 //take 4, action!
 //take 5, action!
+//take 6, action!
+//take 7, action!
         int n=nums.size();
        vector<bool> dp(k+1,false);
         dp[0]=true;
