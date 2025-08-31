@@ -24,7 +24,7 @@ int bs2(vector<int>& arr, int target, int low, int high){
 class Solution {
 public:
     int search(vector<int>& nums, int target) {
-        return bs1(nums, target);
-        // return bs2(nums, target, 0, nums.size()-1);
+        // return bs1(nums, target);
+        return bs2(nums, target, 0, nums.size()-1);
     }
 };
