@@ -27,7 +27,7 @@ public:
         int low=0, high=n-1;
         while(low<=high){
             int mid=(low+high)/2;
-            cout<<low<<" "<<mid<<" "<<high<<endl;
+            // cout<<low<<" "<<mid<<" "<<high<<endl;
             
             if(nums[mid]==target){
                 return mid;
