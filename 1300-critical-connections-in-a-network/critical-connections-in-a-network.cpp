@@ -16,7 +16,10 @@ void dfs(int n, vector<vector<int>> &adjl, int par, int node, vector<int> &lvl, 
             dfs(n, adjl, node, neighbor, lvl, minlvl, ans);
         }
         else{//cycle node towards a descendant or an ancestor
+
             if(minlvl[neighbor]<minlvl[node]) minlvl[node] = minlvl[neighbor];
+            //if neighbor is descendant then fs, minlvl[node] = minlvl[descendant];
+            //but if neighbor is ancestor then should we do minlvl[node] = lvl[ancestor] or minlvl[node] = minlvl[ancestor], ig minlvl[node] = minlvl[ancestor] would be correct since we are removing par-node edge one by one and even on removal of this edge if it could reach an ancestor and that ancestor could reach its ancestor then the node can also reach to the ancestor of ancestor
         }
     }
 
