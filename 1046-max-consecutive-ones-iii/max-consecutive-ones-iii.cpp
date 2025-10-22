@@ -62,7 +62,7 @@ public:
                 if(nums[l]==0)count--;
                 l++;
             }
-            if(count<=k)maxlen=max(maxlen, r-l+1); //only consider its length if its a valid window
+            maxlen=max(maxlen, r-l+1); //only consider its length if its a valid window
             r++;
         }
         return maxlen;
