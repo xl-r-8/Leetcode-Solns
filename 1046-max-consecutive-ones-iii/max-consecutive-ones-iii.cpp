@@ -62,7 +62,7 @@ public:
                 if(nums[l]==0)count--;
                 l++;
             }
-            maxlen=max(maxlen, r-l+1); //only consider its length if its a valid window
+            if(count<=k)maxlen=max(maxlen, r-l+1); //only consider its length if its a valid window, but its a redundant if condition coz even if you dont check it then upar waala if ensures that window stays at maxlen(which was the max size of a valid window previously found)
             r++;
         }
         return maxlen;
