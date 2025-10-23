@@ -25,38 +25,52 @@ public:
         // return maxlen;
 
         //M1: diff brute
+        // int maxlen=0;
+        // for(int i=0; i<n; i++){
+        //     vector<int> freq(26,0); int maxfreq=0;
+        //     for(int j=i; j<n; j++){
+        //         int ch=s[j];
+        //         freq[ch-'A']++;
+        //         maxfreq=max(maxfreq,freq[ch-'A']);
+        //         int len=j-i+1;
+        //         int minchanges=len-maxfreq;
+        //         if(minchanges>k)break;
+        //         maxlen=max(maxlen, len);
+        //     }
+        // }
+        // return maxlen;
 
         //M2: better
-        vector<int> freq(26,0); 
-        int l=0, r=0;
-        int maxfreq=0, maxlen=0;
+        // vector<int> freq(26,0); 
+        // int l=0, r=0;
+        // int maxfreq=0, maxlen=0;
 
-        while(r<n){
-            char ch=s[r];
-            freq[ch-'A']++;
-            int maxfreq=0;
-            for(int ele: freq){
-                maxfreq=max(maxfreq, ele);
-            }
-            int len=r-l+1;
-            int minchanges=len-maxfreq;
-            while(minchanges>k){ //=> shrink window by 1 place
-                char ch2=s[l];
-                freq[ch2-'A']--;
-                l++;
-                maxfreq=0;
-                for(int ele: freq){
-                    maxfreq=max(maxfreq, ele);
-                }
-                len=r-l+1;
-                minchanges=len-maxfreq;
-            }
-            if(minchanges<=k){
-                maxlen=max(maxlen, len);
-            }
-            r++;
-        }
-        return maxlen;
+        // while(r<n){
+        //     char ch=s[r];
+        //     freq[ch-'A']++;
+        //     int maxfreq=0;
+        //     for(int ele: freq){
+        //         maxfreq=max(maxfreq, ele);
+        //     }
+        //     int len=r-l+1;
+        //     int minchanges=len-maxfreq;
+        //     while(minchanges>k){ //=> shrink window by 1 place
+        //         char ch2=s[l];
+        //         freq[ch2-'A']--;
+        //         l++;
+        //         maxfreq=0;
+        //         for(int ele: freq){
+        //             maxfreq=max(maxfreq, ele);
+        //         }
+        //         len=r-l+1;
+        //         minchanges=len-maxfreq;
+        //     }
+        //     if(minchanges<=k){
+        //         maxlen=max(maxlen, len);
+        //     }
+        //     r++;
+        // }
+        // return maxlen;
 
         //M3: optimal
         // vector<int> freq(26,0); 
@@ -66,8 +80,8 @@ public:
         // while(r<n){
         //     char ch=s[r];
         //     freq[ch-'A']++;
-        //     // if(freq[ch-'A']>maxfreq)maxfreq=freq[ch-'A'];//this is wrong
-        //     int maxfreq=0;
+        //     // if(freq[ch-'A']>maxfreq)maxfreq=freq[ch-'A'];//this is wrong, but it works why???? ig this is not wrong and can work
+        //     int maxfreq=0; 
         //     for(int ele: freq){
         //         maxfreq=max(maxfreq, ele);
         //     }
@@ -84,5 +98,28 @@ public:
         //     r++;
         // }
         // return maxlen;
+
+        //M3: optimal but counting maxfreq without for loop
+        vector<int> freq(26,0); 
+        int l=0, r=0;
+        int maxlen=0, maxfreq=0;
+
+        while(r<n){
+            char ch=s[r];
+            freq[ch-'A']++;
+            if(freq[ch-'A']>maxfreq)maxfreq=freq[ch-'A'];//this is wrong, but it works why???? ig this is not wrong and can work
+            int len=r-l+1;
+            int minchanges=len-maxfreq;
+            if(minchanges<=k){
+                maxlen=max(maxlen, len);
+            }
+            else{ //if(minchanges>k) => shrink window by 1 place
+                char ch2=s[l];
+                freq[ch2-'A']--;
+                l++;
+            }
+            r++;
+        }
+        return maxlen;
     }
 };
