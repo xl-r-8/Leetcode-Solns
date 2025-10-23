@@ -26,15 +26,43 @@ public:
 
         //M1: diff brute
 
+        //M2: better
+        // vector<int> freq(26,0); 
+        // int l=0, r=0;
+        // int maxfreq=0, maxlen=0;
+
+        // while(r<n){
+        //     char ch=s[r];
+        //     freq[ch-'A']++;
+        //     if(freq[ch-'A']>maxfreq)maxfreq=freq[ch-'A'];
+        //     int len=r-l+1;
+        //     int minchanges=0;
+        //     while(minchanges>k){ //=> shrink window by 1 place
+        //         char ch2=s[l];
+        //         freq[ch2-'A']--;
+                 
+        //         l++;
+        //     }
+        //     if(minchanges<=k){
+        //         maxlen=max(maxlen, len);
+        //     }
+        //     r++;
+        // }
+        // return maxlen;
+
         //M3: optimal
         vector<int> freq(26,0); 
         int l=0, r=0;
-        int maxfreq=0, maxlen=0;
+        int maxlen=0;
 
         while(r<n){
             char ch=s[r];
             freq[ch-'A']++;
-            if(freq[ch-'A']>maxfreq)maxfreq=freq[ch-'A'];
+            // if(freq[ch-'A']>maxfreq)maxfreq=freq[ch-'A'];//this is wrong
+            int maxfreq=0;
+            for(int ele: freq){
+                maxfreq=max(maxfreq, ele);
+            }
             int len=r-l+1;
             int minchanges=len-maxfreq;
             if(minchanges<=k){
