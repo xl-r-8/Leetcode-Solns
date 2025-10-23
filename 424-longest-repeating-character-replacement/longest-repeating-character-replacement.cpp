@@ -43,7 +43,7 @@ public:
         //M2: better
         // vector<int> freq(26,0); 
         // int l=0, r=0;
-        // int maxfreq=0, maxlen=0;
+        // int maxlen=0;
 
         // while(r<n){
         //     char ch=s[r];
@@ -54,7 +54,7 @@ public:
         //     }
         //     int len=r-l+1;
         //     int minchanges=len-maxfreq;
-        //     while(minchanges>k){ //=> shrink window by 1 place
+        //     while(minchanges>k){ //=> shrink window till you get a valid one
         //         char ch2=s[l];
         //         freq[ch2-'A']--;
         //         l++;
@@ -71,6 +71,31 @@ public:
         //     r++;
         // }
         // return maxlen;
+
+        //M2 but without updating maxfreq with a for loop
+        vector<int> freq(26,0); 
+        int l=0, r=0;
+        int maxfreq=0, maxlen=0;
+
+        while(r<n){
+            char ch=s[r];
+            freq[ch-'A']++;
+            maxfreq=max(maxfreq, freq[ch-'A']);
+            int len=r-l+1;
+            int minchanges=len-maxfreq;
+            while(minchanges>k){ 
+                char ch2=s[l];
+                freq[ch2-'A']--;
+                l++;
+                len=r-l+1;
+                minchanges=len-maxfreq;
+            }
+            if(minchanges<=k){
+                maxlen=max(maxlen, len);
+            }
+            r++;
+        }
+        return maxlen;
 
         //M3: optimal
         // vector<int> freq(26,0); 
@@ -100,26 +125,26 @@ public:
         // return maxlen;
 
         //M3: optimal but counting maxfreq without for loop
-        vector<int> freq(26,0); 
-        int l=0, r=0;
-        int maxlen=0, maxfreq=0;
+        // vector<int> freq(26,0); 
+        // int l=0, r=0;
+        // int maxlen=0, maxfreq=0;
 
-        while(r<n){
-            char ch=s[r];
-            freq[ch-'A']++;
-            if(freq[ch-'A']>maxfreq)maxfreq=freq[ch-'A'];//this is wrong, but it works why???? ig this is not wrong and can work
-            int len=r-l+1;
-            int minchanges=len-maxfreq;
-            if(minchanges<=k){
-                maxlen=max(maxlen, len);
-            }
-            else{ //if(minchanges>k) => shrink window by 1 place
-                char ch2=s[l];
-                freq[ch2-'A']--;
-                l++;
-            }
-            r++;
-        }
-        return maxlen;
+        // while(r<n){
+        //     char ch=s[r];
+        //     freq[ch-'A']++;
+        //     if(freq[ch-'A']>maxfreq)maxfreq=freq[ch-'A'];//this is wrong, but it works why???? ig this is not wrong and can work
+        //     int len=r-l+1;
+        //     int minchanges=len-maxfreq;
+        //     if(minchanges<=k){
+        //         maxlen=max(maxlen, len);
+        //     }
+        //     else{ //if(minchanges>k) => shrink window by 1 place
+        //         char ch2=s[l];
+        //         freq[ch2-'A']--;
+        //         l++;
+        //     }
+        //     r++;
+        // }
+        // return maxlen;
     }
 };
