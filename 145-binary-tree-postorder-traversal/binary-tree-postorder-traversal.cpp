@@ -9,17 +9,17 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
- void postorder(TreeNode* root,vector<int>& storage){
-    if(root==nullptr)return;
-    postorder(root->left,storage);
-    postorder(root->right,storage);
-    storage.push_back(root->val);
+void post(TreeNode* node, vector<int>&ans){
+    if(node==nullptr) return;
+    post(node->left,ans);
+    post(node->right,ans);
+    ans.push_back(node->val);
 }
 class Solution {
 public:
     vector<int> postorderTraversal(TreeNode* root) {
         vector<int> ans;
-        postorder(root,ans);
+        post(root, ans);
         return ans;
     }
 };
