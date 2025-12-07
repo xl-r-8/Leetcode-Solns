@@ -16,6 +16,23 @@ int height(TreeNode* node){
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
-        return height(root);
+        //M1: recursive
+        // return height(root);
+
+        //M2: iterative
+        if(root==nullptr) return 0;
+        queue<TreeNode*> q;
+        q.push(root);
+        int height=0;
+        while(!q.empty()){
+            int size=q.size();
+            height++;
+            for(int i=1; i<=size; i++){
+                TreeNode* node=q.front(); q.pop();
+                if(node->left!=nullptr) q.push(node->left);
+                if(node->right!=nullptr) q.push(node->right);
+            }
+        }
+        return height;
     }
 };
