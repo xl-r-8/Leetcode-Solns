@@ -9,21 +9,22 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+int height(TreeNode* node, unordered_map<TreeNode*, int>& mp){
+    if(node==nullptr) return 0;
+    return mp[node]=max(height(node->left, mp), height(node->right, mp))+1;
+}
+bool preorder(TreeNode* node, unordered_map<TreeNode*, int>& mp){
+    if(node==nullptr) return true;
+    int leftht= (node->left==nullptr)? 0 : mp[node->left]; 
+    int rightht= (node->right==nullptr)? 0 : mp[node->right]; 
+    if(abs(leftht-rightht)>1) return false;
+    return (preorder(node->left, mp) and preorder(node->right, mp));
+}
 class Solution {
 public:
-int maxh(TreeNode* root) {
-    if(root==nullptr)return 0;
-    TreeNode*node=root;
-    int lh=maxh(node->left);
-    if(lh==-1)return -1;
-    int rh=maxh(node->right);
-    if(rh==-1)return -1;
-    if(abs(lh-rh)>1)return -1;
-    return 1+max(lh,rh);    
-    }
     bool isBalanced(TreeNode* root) {
-    if(maxh(root)!=-1)return true;
-    else return false; 
+        unordered_map<TreeNode*,int> mp; 
+        height(root, mp);
+        return preorder(root, mp);
     }
-
 };
