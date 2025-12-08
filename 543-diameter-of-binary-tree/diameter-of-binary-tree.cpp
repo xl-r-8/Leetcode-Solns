@@ -9,19 +9,19 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+int height(TreeNode* node, int& maxd){
+    if(node==nullptr) return 0;
+    int leftht=height(node->left, maxd);
+    int rightht=height(node->right, maxd);
+    int totald=leftht+rightht+1 -1; //max path including the node = left subtree + node + right subtree, -1 coz we just want num of edges and not num of nodes
+    maxd= max(maxd, totald);
+    return max(leftht, rightht) + 1;
+}
 class Solution {
 public:
     int diameterOfBinaryTree(TreeNode* root) {
-    int maxi=INT_MIN;
-    maxd(root,maxi);
-    return maxi;
+        int maxd=0;
+        height(root, maxd);
+        return maxd;
     }
-// efficient o(n) solution
-int maxd(TreeNode*root,int &maxi){
-    if(root==nullptr)return 0;//no node 0 depth
-    int lh=maxd(root->left,maxi);
-    int rh=maxd(root->right,maxi);
-    maxi=max(maxi,lh+rh);
-    return 1+max(lh,rh);
-}
 };
