@@ -53,14 +53,15 @@ public:
         //M2
         while(!q.empty()){
             int size=q.size();
-            vector<int> temp;
-            for(int i=1; i<=size; i++){
+            vector<int> temp(size);
+            for(int i=0; i<size; i++){
                 TreeNode* node=q.front(); q.pop();
-                temp.push_back(node->val);
+                int index=(count==0)? i : size-i-1;
+                temp[index]=node->val;
                 if(node->left!=nullptr) q.push(node->left);
                 if(node->right!=nullptr) q.push(node->right);
             }
-            if(count==1) reverse(temp.begin(),temp.end());
+            // if(count==1) reverse(temp.begin(),temp.end());
             count=(count+1)%2;
             ans.push_back(temp);
         }
