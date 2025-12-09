@@ -17,34 +17,50 @@ public:
         if(root==nullptr) return ans;
         q.push(root);
         int count=0; 
+        //M1:
+        // while(!q.empty()){
+        //     int size=q.size();
+        //     vector<int> temp;
+        //     stack<TreeNode*> s;
+        //     if(count==0){
+        //         for(int i=1; i<=size; i++){
+        //             TreeNode* node=q.front(); q.pop();
+        //             temp.push_back(node->val);
+        //             s.push(node);
+        //         }
+        //         while(!s.empty()){
+        //             TreeNode* node=s.top(); s.pop();
+        //             if(node->right!=nullptr) q.push(node->right);
+        //             if(node->left!=nullptr) q.push(node->left);
+        //         }
+        //     }
+        //     else{
+        //         for(int i=1; i<=size; i++){
+        //             TreeNode* node=q.front(); q.pop();
+        //             temp.push_back(node->val);
+        //             s.push(node);
+        //         }
+        //         while(!s.empty()){
+        //             TreeNode* node=s.top(); s.pop();
+        //             if(node->left!=nullptr) q.push(node->left);
+        //             if(node->right!=nullptr) q.push(node->right);
+        //         }
+        //     }
+        //     count=(count+1)%2;
+        //     ans.push_back(temp);
+        // }
+
+        //M2
         while(!q.empty()){
             int size=q.size();
             vector<int> temp;
-            stack<TreeNode*> s;
-            if(count==0){
-                for(int i=1; i<=size; i++){
-                    TreeNode* node=q.front(); q.pop();
-                    temp.push_back(node->val);
-                    s.push(node);
-                }
-                while(!s.empty()){
-                    TreeNode* node=s.top(); s.pop();
-                    if(node->right!=nullptr) q.push(node->right);
-                    if(node->left!=nullptr) q.push(node->left);
-                }
+            for(int i=1; i<=size; i++){
+                TreeNode* node=q.front(); q.pop();
+                temp.push_back(node->val);
+                if(node->left!=nullptr) q.push(node->left);
+                if(node->right!=nullptr) q.push(node->right);
             }
-            else{
-                for(int i=1; i<=size; i++){
-                    TreeNode* node=q.front(); q.pop();
-                    temp.push_back(node->val);
-                    s.push(node);
-                }
-                while(!s.empty()){
-                    TreeNode* node=s.top(); s.pop();
-                    if(node->left!=nullptr) q.push(node->left);
-                    if(node->right!=nullptr) q.push(node->right);
-                }
-            }
+            if(count==1) reverse(temp.begin(),temp.end());
             count=(count+1)%2;
             ans.push_back(temp);
         }
