@@ -21,7 +21,7 @@ public:
             int size=q.size();
             vector<int> temp;
             stack<TreeNode*> s;
-            if(count%2==0){
+            if(count==0){
                 for(int i=1; i<=size; i++){
                     TreeNode* node=q.front(); q.pop();
                     temp.push_back(node->val);
@@ -45,7 +45,7 @@ public:
                     if(node->right!=nullptr) q.push(node->right);
                 }
             }
-            count++;
+            count=(count+1)%2;
             ans.push_back(temp);
         }
         return ans;
