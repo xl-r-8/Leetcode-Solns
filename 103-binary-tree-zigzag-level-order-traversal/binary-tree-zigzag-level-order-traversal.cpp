@@ -12,28 +12,42 @@
 class Solution {
 public:
     vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
-     vector<vector<int>>result;
-     if(root==nullptr)return result;
-     queue<TreeNode*>q;
-     q.push(root);
-     bool flag=true;
-     while(!q.empty()){
-        int s=q.size();
-        vector<int>level(s);
-        for(int i=0;i<s;i++){
-            TreeNode*curr=q.front();
-            q.pop();
-            int index;
-            if(flag)index=i;
-            else index=s-1-i;
-            level[index]=curr->val;
-            if(curr->left)q.push(curr->left);
-            if(curr->right)q.push(curr->right);
-
-      }
-      flag=!flag;
-      result.push_back(level);
-     }
-     return result;
+        queue<TreeNode*> q;
+        vector<vector<int>> ans;
+        if(root==nullptr) return ans;
+        q.push(root);
+        int count=0; 
+        while(!q.empty()){
+            int size=q.size();
+            vector<int> temp;
+            stack<TreeNode*> s;
+            if(count%2==0){
+                for(int i=1; i<=size; i++){
+                    TreeNode* node=q.front(); q.pop();
+                    temp.push_back(node->val);
+                    s.push(node);
+                }
+                while(!s.empty()){
+                    TreeNode* node=s.top(); s.pop();
+                    if(node->right!=nullptr) q.push(node->right);
+                    if(node->left!=nullptr) q.push(node->left);
+                }
+            }
+            else{
+                for(int i=1; i<=size; i++){
+                    TreeNode* node=q.front(); q.pop();
+                    temp.push_back(node->val);
+                    s.push(node);
+                }
+                while(!s.empty()){
+                    TreeNode* node=s.top(); s.pop();
+                    if(node->left!=nullptr) q.push(node->left);
+                    if(node->right!=nullptr) q.push(node->right);
+                }
+            }
+            count++;
+            ans.push_back(temp);
+        }
+        return ans;
     }
 };
