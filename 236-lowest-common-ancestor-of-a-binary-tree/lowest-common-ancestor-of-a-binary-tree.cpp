@@ -21,7 +21,7 @@
 
 TreeNode* lca(TreeNode* node, TreeNode* p, TreeNode* q){
     if(node==nullptr) return nullptr;
-    if(node->val==p->val or node->val==q->val) return node;
+    if(node==p or node==q) return node;
     TreeNode* left=lca(node->left, p, q);
     TreeNode* right=lca(node->right, p, q);
     if(left==nullptr) return right;
