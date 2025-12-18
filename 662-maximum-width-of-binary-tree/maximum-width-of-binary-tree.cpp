@@ -19,7 +19,7 @@ public:
         // 4  5 6  7
         //say node 5 and 7 are null then we just have to find pos of first node which is 4 and pos of the last node which is 6, then width of this level=6-4+1=3
         queue<pair<TreeNode*, long long>> q;//{node,pos}
-        q.push({root,1});
+        q.push({root,0});
         long long ans=0;
         while(!q.empty()){
             int size=q.size();
