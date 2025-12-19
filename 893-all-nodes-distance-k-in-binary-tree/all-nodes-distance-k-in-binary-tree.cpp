@@ -27,23 +27,23 @@ public:
         mp[root]=nullptr;//root doesnt have a par
 
         //1.1: marking node->par pointers through bfs
-        queue<TreeNode*>q;
-        if(root!=nullptr) q.push(root);
-        while(!q.empty()){
-            TreeNode* node=q.front(); q.pop();
-            if(node->left!=nullptr){
-                mp[node->left]=node;//par(node->left)=node
-                q.push(node->left);
-            }
-            if(node->right!=nullptr){
-                mp[node->right]=node;//par(node->right)=node
-                q.push(node->right);
-            }
-        }
+        // queue<TreeNode*>q;
+        // if(root!=nullptr) q.push(root);
+        // while(!q.empty()){
+        //     TreeNode* node=q.front(); q.pop();
+        //     if(node->left!=nullptr){
+        //         mp[node->left]=node;//par(node->left)=node
+        //         q.push(node->left);
+        //     }
+        //     if(node->right!=nullptr){
+        //         mp[node->right]=node;//par(node->right)=node
+        //         q.push(node->right);
+        //     }
+        // }
 
         //or
         //1.2
-        // if(root!=nullptr)dfs(root, mp);
+        if(root!=nullptr)dfs(root, mp);
 
         //2.1: bfs for finding nodes at dist k
         queue<pair<TreeNode*,int>> q2;//{node,dist}
