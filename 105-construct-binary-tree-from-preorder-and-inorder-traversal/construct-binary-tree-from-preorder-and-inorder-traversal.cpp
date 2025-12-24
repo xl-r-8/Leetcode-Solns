@@ -16,7 +16,10 @@ TreeNode* maketree(vector<int>& in, int loi, int hii, vector<int>& pre, int lop,
     TreeNode* node=new TreeNode(ele);
     int index=-1;
     for(int i=loi; i<=hii; i++){
-        if(in[i]==ele) index=i;
+        if(in[i]==ele) {
+            index=i;
+            break;
+        }
     }
     TreeNode* left=maketree(in, loi, index-1, pre, lop+1, lop+(index-loi)); //index-loi=number of eles b/w loi and index
     TreeNode* right=maketree(in, index+1, hii, pre, lop+(index-loi)+1, hip);
