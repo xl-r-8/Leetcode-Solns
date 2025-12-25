@@ -10,19 +10,27 @@
  * };
  */
 
-TreeNode* maketree(vector<int>& in, int loi, int hii, vector<int>& pre, int lop, int hip){
-    if(loi>hii) return nullptr;
-    int ele=pre[lop];
-    TreeNode* node=new TreeNode(ele);
-    int index=-1;
-    for(int i=loi; i<=hii; i++){
-        if(in[i]==ele) {
-            index=i;
-            break;
-        }
-    }
-    TreeNode* left=maketree(in, loi, index-1, pre, lop+1, lop+(index-loi)); //index-loi=number of eles b/w loi and index
-    TreeNode* right=maketree(in, index+1, hii, pre, lop+(index-loi)+1, hip);
+TreeNode* maketree(vector<int>& in, int inStart, int inEnd, vector<int>& pre, int preStart, int preEnd, unordered_map<int, int>& inMap){
+    if(inStart>inEnd) return nullptr;
+    int root=pre[preStart];
+    TreeNode* node=new TreeNode(root);
+    
+    //M1: find root by traversing every time for every root=> all other things take O(1) TC, this will take O(in.size()) as TC and on summing it up the total TC will be O(n^2)=> TC of maketree=O(n^2)
+    // int inRootind=-1;//inRootindex=index of root in inorder traversal
+    // for(int i=inStart; i<=inEnd; i++){
+    //     if(in[i]==root) {
+    //         inRootind=i;
+    //         break;
+    //     }
+    // }
+
+    //M2: find index of root in inorder traversal using map
+    int inRootind=inMap[root];
+
+    int numsLeft=inRootind-inStart;//numsLeft=num of elements on the left of Root in inorder traversal=num of elements b/w Root and start of inorder
+
+    TreeNode* left=maketree(in, inStart, inRootind-1, pre, preStart+1, preStart+numsLeft, inMap); 
+    TreeNode* right=maketree(in, inRootind+1, inEnd, pre, preStart+numsLeft+1, preEnd, inMap);
     node->left=left;
     node->right=right;
 
@@ -33,6 +41,10 @@ class Solution {
 public:
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
         int n=preorder.size();
-        return maketree(inorder, 0, n-1, preorder, 0, n-1);
+        unordered_map<int,int> inMap;//{ele: index} for inorder traversal
+        for(int i=0; i<n; i++){
+            inMap[inorder[i]]=i;//inorder[i]=ele
+        }
+        return maketree(inorder, 0, n-1, preorder, 0, n-1, inMap);
     }
 };
