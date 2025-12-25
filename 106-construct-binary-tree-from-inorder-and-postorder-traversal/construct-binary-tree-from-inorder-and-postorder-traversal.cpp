@@ -27,12 +27,18 @@ TreeNode* maketree(vector<int>& in, int inStart, int inEnd, vector<int>& post, i
     //M2: find index of root in inorder traversal using map
     int inRootind=inMap[root];
 
-    int numsRight=inEnd-inRootind;//numsRight=num of elements on the right of Root in inorder traversal=num of elements b/w Root and end of inorder
+    // int numsRight=inEnd-inRootind;//numsRight=num of elements on the right of Root in inorder traversal=num of elements b/w Root and end of inorder
+    
+    // TreeNode* right=maketree(in, inRootind+1, inEnd, post, postEnd-numsRight, postEnd-1, inMap);
+    // TreeNode* left=maketree(in, inStart, inRootind-1, post, postStart, postEnd-numsRight-1, inMap); 
+    // node->right=right;
+    // node->left=left;
 
-    TreeNode* right=maketree(in, inRootind+1, inEnd, post, postEnd-numsRight, postEnd-1, inMap);
-    TreeNode* left=maketree(in, inStart, inRootind-1, post, postStart, postEnd-numsRight-1, inMap); 
-    node->right=right;
+    int numsLeft=inRootind-inStart;
+    TreeNode* left=maketree(in, inStart, inRootind-1, post, postStart, postStart+numsLeft-1, inMap); 
+    TreeNode* right=maketree(in, inRootind+1, inEnd, post, postStart+numsLeft, postEnd-1, inMap);
     node->left=left;
+    node->right=right;
 
     return node;
 }
