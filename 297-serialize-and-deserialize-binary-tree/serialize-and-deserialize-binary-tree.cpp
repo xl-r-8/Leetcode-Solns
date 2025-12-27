@@ -8,22 +8,10 @@
  * };
  */
 
-//M1: fake the system 😎
-// TreeNode* node=nullptr;
-
-//M2: real way
-// TreeNode* makeTree(vector<int> v, int i. int j){
-//     if(j>=v.size() or i>=v.size() or v[i]==1001 ) return nullptr;
-//     TreeNode* node=new TreeNode(v[i]);
-//     node->left=makeTree(v, 2*i+1);
-//     node->right=makeTree(v, 2*i+2);
-
-//     return node;
-// }
-
 class Codec {
 public:
-
+    
+    //M2.3: cleaner and without map
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
         queue<TreeNode*> q;
@@ -48,7 +36,7 @@ public:
         vector<string> tokens;
         string cur="";
 
-        for(int i=0; i<data.size();i++) {
+        for(int i=0; i<data.size();i++){//i=index of chars in data
             char ch=data[i];
             if(ch==','){
                 tokens.push_back(cur);
@@ -56,36 +44,36 @@ public:
             }            
             else cur+=data[i];
         }
-        
-        unordered_map<int, TreeNode*> mp;
-        int i=0, j=1;
+
         TreeNode* root;
-        if(tokens[0]=="#") root=nullptr;
-        else{
-            int val=stoi(tokens[0]);
-            root=new TreeNode(val);
-        }
-        mp[0]=root; 
-        while(j<tokens.size()){
-            if(tokens[i]=="#") i++;
-            else{
-                TreeNode* node=mp[i];
-                TreeNode* left;
-                if(tokens[j]=="#") left=nullptr;
-                else left=new TreeNode(stoi(tokens[j]));
-                mp[j]=left;
-                node->left=left;
-                j++;
-                TreeNode* right;
-                if(tokens[j]=="#") right=nullptr;
-                else right=new TreeNode(stoi(tokens[j]));
-                mp[j]=right;
-                node->right=right;
-                j++;
-                i++;
+        if(tokens[0]=="#"){
+            root=nullptr;
+            return root;
+        } 
+        root=new TreeNode(stoi(tokens[0]));
+        queue<TreeNode*> q;
+        q.push(root);
+
+        int i=1;//i=index of a str in tokens
+        while(!q.empty()){
+            TreeNode* node=q.front(); q.pop();
+
+            if(i<tokens.size() and tokens[i]!="#"){
+                //you dont create node for token "#", i.e. you are not creating node for nullptr nodes then how would you mark node->left=nullptr?: we dont have to do this coz by default if you dont assign any value then node->left=nullptr
+                TreeNode* left=new TreeNode(stoi(tokens[i]));
+                q.push(left);
+                node->left=left; 
             }
+            i++;
+            //why outside if? coz even if node->left is nullptr and already marked by default but we have to move to the next token to mark node-> right
+            if(i<tokens.size() and tokens[i]!="#"){
+                TreeNode* right=new TreeNode(stoi(tokens[i]));
+                q.push(right);
+                node->right=right; 
+            }
+            i++;
         }
-        
+
         return root;
     }
 };
