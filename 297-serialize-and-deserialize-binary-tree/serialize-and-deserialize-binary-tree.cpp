@@ -56,7 +56,7 @@ public:
         for(int i=0; i<data.size();i++) {
             char ch=data[i];
             if(ch==','){
-                v.push_back(num);
+                v.push_back(num*sign);
                 num=0;
                 sign=1;
             }
@@ -65,7 +65,7 @@ public:
                 i++;//skip the comma of #
             }
             else if(ch=='-') sign=-1;            
-            else num = num * 10 + (ch - '0')*sign;
+            else num = num * 10 + (ch - '0');
         }
         for(int ele:v) cout<<ele<<" ";
         
