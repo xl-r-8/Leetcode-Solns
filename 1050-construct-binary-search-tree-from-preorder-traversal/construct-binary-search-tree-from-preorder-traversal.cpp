@@ -9,7 +9,7 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-TreeNode* bst(vector<int>& preorder, int i, int mn, int mx, vector<TreeNode*>dp){
+TreeNode* bst(vector<int>& preorder, int i, int mn, int mx, vector<TreeNode*>& dp){
     if(i>=preorder.size()) return nullptr;
     if(preorder[i]<=mn or preorder[i]>=mx) return bst(preorder, i+1, mn, mx, dp); //if i+1 is not the node then the next one might be
     if(dp[i]!=nullptr) return dp[i];
