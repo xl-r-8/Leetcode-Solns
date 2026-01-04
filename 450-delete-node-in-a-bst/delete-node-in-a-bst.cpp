@@ -20,7 +20,6 @@ public:
         TreeNode* par=nullptr;
         while(node!=nullptr and node->val!=key){
             // cout<<node->val<<endl;
-            if(node==nullptr) return root;
             if(key<node->val){
                 par=node;
                 node=node->left;
