@@ -10,29 +10,81 @@
  * };
  */
 
-void ino(TreeNode* node, vector<int>& v){
-    if(node==nullptr) return;
+class BSTnext {
+    stack<TreeNode*> s;
+public:
+    BSTnext(TreeNode* root) {
+        pushall(root);
+    }
+    
+    int ele() {
+        TreeNode* node=s.top();
+        return node->val;
+    }
 
-    ino(node->left, v);
-    v.push_back(node->val);
-    ino(node->right, v);
+    void next(){
+        TreeNode* node=s.top(); s.pop();
+        pushall(node->right);
+    }
+    
+    bool hasnext() {
+        return !s.empty();
+    }
 
-}
+    void pushall(TreeNode* node){ //order of function execution in cpp
+        while(node!=nullptr){
+            s.push(node);
+            node=node->left;
+        }
+    }
+};
+
+class BSTprev {
+    stack<TreeNode*> s;
+public:
+    BSTprev(TreeNode* root) {
+        pushall(root);
+    }
+    
+    int ele() {
+        TreeNode* node=s.top();
+        return node->val;
+    }
+
+    void prev(){//move previous
+        TreeNode* node=s.top(); s.pop();
+        pushall(node->left);
+    }
+    
+    bool hasprev() {
+        return !s.empty();
+    }
+
+    void pushall(TreeNode* node){ //order of function execution in cpp
+        while(node!=nullptr){
+            s.push(node);
+            node=node->right;
+        }
+    }
+};
+
 
 class Solution {
 public:
     bool findTarget(TreeNode* root, int k) {
-        vector<int> v;
-        ino(root, v);
-
-        int i=0, j=v.size()-1;
-        while(i<j){
-            if(v[i]+v[j]==k) return true;
-            else if(v[i]+v[j]>k)j--;
-            else{ //if(v[i]+v[j]>k)
-                i++;
+        BSTnext a(root);
+        BSTprev b(root);
+        while(a.hasnext() and b.hasprev()){
+            if(a.ele()+b.ele()==k){
+                if(a.ele()==b.ele())break;
+                return true;
+            } 
+            else if(a.ele()+b.ele()>k)b.prev();
+            else{ //if(a.ele()+b.ele()<k)
+                a.next();
             }
         }
+
         return false;
     }
 };
