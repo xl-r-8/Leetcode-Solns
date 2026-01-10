@@ -15,30 +15,24 @@ public:
     vector<int> inorderTraversal(TreeNode* root) {
         vector<int> ans;
         TreeNode* curr=root;
-        unordered_map<TreeNode*, TreeNode*> next;
 
         while(curr!=nullptr){
             if(curr->left==nullptr){
                 ans.push_back(curr->val);
                 if(curr->right!=nullptr)curr=curr->right;
-                else{
-                    if(next.find(curr)!= next.end()) curr=next[curr];//ie when curr exists in next
-                    else curr=nullptr;
-                }
+                else curr=nullptr;
             }
             else{
                 TreeNode* node=curr->left;
-                while(node->right!=nullptr) node=node->right;
-                if(next.find(node)!= next.end()){
+                while(node->right!=nullptr and node->right!=curr) node=node->right;
+                if(node->right==curr){
                     ans.push_back(curr->val);
+                    node->right=nullptr;
                     if(curr->right!=nullptr)curr=curr->right;
-                    else{
-                        if(next.find(curr)!= next.end()) curr=next[curr];
-                        else curr=nullptr;
-                    }
+                    else curr=nullptr;
                 }
-                else{
-                    next[node]=curr;
+                else{ //if(node->right==nullptr)
+                    node->right=curr;
                     curr=curr->left;
                 }
             }
