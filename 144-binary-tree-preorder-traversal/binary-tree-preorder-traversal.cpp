@@ -10,29 +10,30 @@
  * };
  */
 
-void pre(TreeNode* node, vector<int>&ans){
-    if(node==nullptr) return;
-    ans.push_back(node->val);
-    pre(node->left,ans);
-    pre(node->right,ans);
-}
 class Solution {
 public:
     vector<int> preorderTraversal(TreeNode* root) {
         vector<int> ans;
-        // M1: recursive soln
-        // pre(root, ans);
-        // return ans;
+        TreeNode* curr=root;
 
-        // M2: iterative soln
-        stack<TreeNode*> st;
-        if(root!=nullptr)st.push(root);
-        while(!st.empty()){
-            TreeNode* node=st.top(); st.pop();
-            ans.push_back(node->val);
-            if(node->right!=nullptr) st.push(node->right);
-            if(node->left!=nullptr) st.push(node->left);
-
+        while(curr!=nullptr){
+            if(curr->left==nullptr){
+                ans.push_back(curr->val);
+                curr=curr->right;
+            }
+            else{
+                TreeNode* node=curr->left;
+                while(node->right!=nullptr and node->right!=curr) node=node->right;
+                if(node->right==curr){
+                    node->right=nullptr;
+                    curr=curr->right;
+                }
+                else{ //if(node->right==nullptr)
+                    ans.push_back(curr->val);
+                    node->right=curr;
+                    curr=curr->left;
+                }
+            }
         }
         return ans;
 
