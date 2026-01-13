@@ -10,21 +10,20 @@
  * };
  */
 
-void post(TreeNode* node){
+
+void revpost(TreeNode* node, TreeNode* &prev){
     if(node==nullptr) return;
-    post(node->left);
-    post(node->right);
-    if(node->left==nullptr) return;
-    TreeNode* tree=node->left;
-    while(tree->right!=nullptr) tree=tree->right;
-    tree->right=node->right;
-    node->right=node->left;
+    revpost(node->right, prev);
+    revpost(node->left, prev);
+    node->right=prev;
     node->left=nullptr;
-} 
+    prev=node;
+}
 
 class Solution {
 public:
     void flatten(TreeNode* root) {
-        post(root);
+        TreeNode* prev=nullptr;
+        revpost(root, prev);
     }
 };
