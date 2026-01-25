@@ -1,64 +1,37 @@
-bool comparator(vector<int> a, vector<int> b){
-    return a[0]<b[0];
-}
-
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        //M1: Brute force
-        // vector<int> ans;
-        // int n=nums.size();
-        // int found=0;
-        // for(int i=0; i<n;i++){
-        //     for(int j=0; j<n; j++){
-        //         if(i!=j and nums[i]+nums[j]==target){
-        //             ans.push_back(min(i,j));
-        //             ans.push_back(max(i,j));
-        //             found=1;
-        //             break;
-        //         }
-        //     }
-        //     if(found) break;
-        // }
-        // return ans;
-
-        //M2: better
-        // vector<vector<int>>v;
-        // vector<int> ans;
-        // for(int i=0; i<nums.size();i++){
-        //     v.push_back({nums[i],i});
-        // }
-        // sort(v.begin(),v.end(),comparator);
-        // int i=0; int j=v.size()-1;
-        // while(i<j){
-        //     if(v[i][0]+v[j][0]<target) i++;
-        //     else if(v[i][0]+v[j][0]>target) j--;
-        //     else {
-        //         ans.push_back(v[i][1]);
-        //         ans.push_back(v[j][1]);
-        //         break;
-        //         }
-        // }
-        // return ans;
-
-        //M3:best
-        unordered_map<int,int> mp;
-        vector<int> ans;
-        for(int i=0; i<nums.size();i++){
-            mp[nums[i]]=i;
+    static bool comparator(pair<int, int>& a, pair<int, int>& b){
+        if(a.first!=b.first) return a.first<b.first;
+        else{ //if(a.first==b.first)
+            return a.second<b.second;
         }
-        for (int i = 0; i < nums.size(); i++) {
-            int complement = target - nums[i];
-            
-            //find basically just checks ki complement is present as a key or not in hash map that's why it's O(1)
-            if (mp.find(complement) != mp.end() && mp[complement] != i) {
-                ans.push_back(i);
-                ans.push_back(mp[complement]);
+    }
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int n=nums.size();
+        vector<pair<int, int>> mp;
+        for(int i=0; i<n; i++){
+            pair<int,int> p;
+            p.first=nums[i];
+            p.second=i;
+            mp.push_back(p);
+        }
+        sort(mp.begin(), mp.end(), comparator);
+        vector<int> ans;
+        // cout<<p1.second<<" "<<p2.first<<endl;
+        int i=0, j=n-1;
+        while(i<j){
+            pair<int, int>p1=mp[i];
+            pair<int, int> p2=mp[j];
+            if(p1.first+p2.first==target){
+                ans.push_back(p1.second);
+                ans.push_back(p2.second);
                 break;
+            }
+            else if(p1.first+p2.first<target) i++;
+            else{ //(p1.first+p2.first>target)
+                j--;
             }
         }
         return ans;
-
-                                                                                        
     }
 };
