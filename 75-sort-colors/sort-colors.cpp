@@ -7,10 +7,6 @@ public:
 
         while(i<=q or j>=p){
             while(i<n and nums[i]<=1)i++;
-            // cout<<i<<" "<<q<<"  "<<j<<" "<<p<<endl;
-            // cout<<"before swap: ";
-            // for(int ele: nums) cout<<ele<<" ";
-            // cout<<endl;
             if(i<=q){
                 swap(nums[i], nums[q]);
                 q--;
@@ -20,9 +16,6 @@ public:
                 swap(nums[j], nums[p]);
                 p++;
             }
-            // cout<<"after swap: ";
-            // for(int ele: nums) cout<<ele<<" ";
-            // cout<<endl;
         }
     }
 };
