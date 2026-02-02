@@ -7,7 +7,7 @@ public:
         for(int ele: nums){
             if(sum<=0)sum=ele;
             else sum=sum+ele;
-            mxsum=max(sum, mxsum);
+            mxsum=max(sum, mxsum);  
         }
         return mxsum;
     }
