@@ -8,8 +8,9 @@ public:
     }
     void rotate(vector<int>& nums, int k) {
         int n=nums.size();
+        k=k%n;
         rev(nums, 0, n-1);
-        rev(nums, 0, ((k)%n-1)%n);//(k%n-1)=(k%n-1%n)=(k-1)%n
-        rev(nums, (k)%n, n-1);
+        rev(nums, 0, k-1);//(k%n-1)=(k%n-1%n)=(k-1)%n
+        rev(nums, k, n-1);
     }
 };
