@@ -11,22 +11,16 @@
 class Solution {
 public:
     ListNode* middleNode(ListNode* head) {
-        //M1: 2 traversals, counting number of nodes
-        if(head==nullptr) return head;
-        int count=0;
-        ListNode* temp = head;
-        while(temp != nullptr){
-            count++;
-            temp = temp->next;
+        //M2: tortoise-rabbit method
+        ListNode* tortoise = head;
+        ListNode* rabbit = head;
+        //to revise pointers and to make notes
+        //to not run away from things
+        while( rabbit != nullptr and rabbit->next !=nullptr ){
+            tortoise = tortoise->next;
+            rabbit = rabbit->next->next;
         }
-        int stop = (count/2)+1;
-        temp = head;
-        while(stop>1){
-            temp = temp->next;
-            stop--;
-        }
-        
-        return temp;
+        return tortoise;
         
     }
 };
