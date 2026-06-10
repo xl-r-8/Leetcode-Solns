@@ -10,19 +10,17 @@
  */
 class Solution {
 public:
-    bool isPalindrome(ListNode* head) {
-        vector<int> v;
-        ListNode* temp = head;
-        while( temp != nullptr ){
-            v.push_back(temp->val);
-            temp = temp->next;
-        }
-        if(v.empty()) return true;
-        int i=0, j = v.size()-1;
-        while( i < j ){
-            if( v[i] != v[j] ) return false;
-            i++; j--;
-        }
+    bool rec(ListNode* &i, ListNode* j){
+        if(j == nullptr) return true;
+        if(rec(i, j->next) == false) return false;
+        if(i->val != j->val) return false;
+        i = i->next;
         return true;
+    }
+    bool isPalindrome(ListNode* head) {
+        // M2: without using storage
+        ListNode* temp = head;
+        return rec(temp, temp);
+        
     }
 };
