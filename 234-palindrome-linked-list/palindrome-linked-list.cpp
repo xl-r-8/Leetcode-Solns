@@ -10,22 +10,57 @@
  */
 class Solution {
 public:
-    bool rec(ListNode* &i, ListNode* j){
-        if(j == nullptr) return true;
-        if(rec(i, j->next) == false) return false;
-        if(i->val != j->val) return false;
-        i = i->next;
-        return true;
+    ListNode* reverseList(ListNode* head) {
+        ListNode* temp = head;
+
+        //M1: using 3 ptrs
+        ListNode* back = nullptr; 
+        ListNode* cur = head;
+        ListNode* front = nullptr;
+        if( head ) front = head->next ;
+        // else ListNode* front = nullptr;
+        while( cur != nullptr ){
+            // cout<< cur->val <<endl;
+            cur->next = back; 
+            back = cur;
+            cur = front;
+            if( front ) front = front->next; //front can be nullptr when cur = tail so only move front when cur is not tail
+            
+        }
+        head = back;
+        return head;
     }
     bool isPalindrome(ListNode* head) {
-        // M2: without using storage, but recursive call stack will be O(n), so no point of using recursion if we want sc = o(1). for sc = o(1), we have to use iterative soln
-        // May be I did something extra. But still O(N) time and O(1) space and 1ms solution in java and faster than 95.xx%.
-        // Find the mid using fast pointer and slow pointer approach = O(N/2) -> O(N).
-        // Reverse the first half of the list inline = O(N/2) -> O(N) time, O(1) space.
-        // Compare the 2 lists. = O(N) time, O(1) space.
-        // So overall: O(N) time and O(1) space.
+        if(head == nullptr or head->next == nullptr) return true;
+        ListNode* tortoise = head;
+        ListNode* rabbit = head;
+        ListNode* snail = nullptr;
+        //to revise pointers and to make notes
+        //to not run away from things
+        while( true ){
+            snail = tortoise;
+            tortoise = tortoise->next;
+            rabbit = rabbit->next->next;
+            if(rabbit == nullptr){ 
+                snail->next = reverseList(tortoise);
+                break;
+            }
+            if(rabbit->next == nullptr){
+                tortoise->next = reverseList(tortoise->next);
+                snail = tortoise;
+                break;
+            }
+        }
 
-        ListNode* temp = head;
-        return rec(temp, temp);
+        ListNode* t1 = head; 
+        ListNode* t2 = snail->next;
+
+        while(t2 != nullptr){
+            if(t1->val != t2->val) return false;
+            t1 = t1->next;
+            t2 = t2->next;
+        }
+
+        return true;
     }
 };
