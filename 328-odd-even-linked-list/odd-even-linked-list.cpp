@@ -11,34 +11,29 @@
 class Solution {
 public:
     ListNode* oddEvenList(ListNode* head) {
-        //M1: TC = O(n), SC = O(n)
-        //separate odd and even linked lists
+        //M2: TC = O(n), SC = O(1)
+        if(head == nullptr or head->next == nullptr) return head;
+        //so cpp checks condition 1 by 1. if its or and the 1st one is true then it doesnt even check the 2nd condition. so if a condition can disrupt a program you have to place it later, so cpp only checks it if the 1st condition isnt satisfied
 
-        if(head == nullptr) return nullptr;
-
-        ListNode* ho = new ListNode(head->val); ListNode* to = ho;
-        // is this possible ListNode* ho(head->val);
-        // ListNode* he; does this mean he is nullptr or do we have to explicitly specify he = nullptr
-        if(head->next == nullptr) return ho; //why arrow instead of dot. pointer revision. class and struct revision.
-        ListNode* he = new ListNode(head->next->val); ListNode* te = he;
+        ListNode* ot = head;
+        ListNode* et = head->next; ListNode* eh = et;
         ListNode* temp = head->next->next;
         int count = 3;
         while(temp != nullptr){
             if(count % 2 == 1){
-                to->next = new ListNode(temp->val);
-                to = to->next;
+                ot->next = temp;
+                ot = ot->next;
             }
-            else{
-                te->next = new ListNode(temp->val);
-                te = te->next;
+            else {
+                et->next = temp;
+                et = et->next;
             }
-            temp = temp -> next;
+
+            temp = temp->next;
             count++;
         }
-        to->next = he;
-        return ho;
-
-
-        
+        et->next = nullptr;
+        ot->next = eh;
+        return head;
     }
 };
