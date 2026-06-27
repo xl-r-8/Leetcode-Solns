@@ -4,7 +4,7 @@ public:
         unordered_map<long long, long long> mp;
         int n = nums.size();
 
-        for(int i = 0; i<n; i++){ //spaces not required
+        for(int i = 0; i < n; i++){ //spaces around operators, except i++
             mp[nums[i]]++;
         }
         int mxcnt = 0;
@@ -12,8 +12,8 @@ public:
             int cnt = 0;
             long long ele = it->first;
             while(ele <= 1e9){
-                if(ele==1){
-                    if(mp[ele]%2==0) cnt += mp[ele]-1;
+                if(ele == 1){
+                    if(mp[ele] % 2 == 0) cnt += mp[ele]-1;
                     else cnt += mp[ele];
                     break;
                 }
@@ -26,10 +26,10 @@ public:
                     break;
                 }
                 //2 or more count
-                cnt+=2;
+                cnt += 2;
                 ele = ele*ele;
             }
-            if(cnt%2==0) cnt--;
+            if(cnt % 2 == 0) cnt--;
             mxcnt = max(mxcnt, cnt);
         }
         return mxcnt;
