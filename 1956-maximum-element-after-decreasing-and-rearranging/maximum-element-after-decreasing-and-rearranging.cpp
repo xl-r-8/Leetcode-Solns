@@ -1,13 +1,17 @@
 class Solution {
 public:
     int maximumElementAfterDecrementingAndRearranging(vector<int>& arr) {
-        sort(arr.begin(), arr.end());
         int n = arr.size();
-        int count = 1;
-        arr[0] = 1;
-        for(int i = 1; i < n; i++){
-            if(arr[i] > arr[i-1]+1) arr[i] = arr[i-1]+1;
+        vector<int> count(n+1, 0);
+        for(int ele: arr){
+            if(ele>n) count[n]++;
+            else count[ele]++;
         }
-        return arr[n-1];
+        int ans=1;
+        for(int i=2; i<=n; i++){
+            // i = ele
+            ans = min(i, ans + count[i]);
+        }
+        return ans;
     }
 };
