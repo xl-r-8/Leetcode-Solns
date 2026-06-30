@@ -16,6 +16,12 @@ public:
         // }
         // return count;
 
+        // issue with 2 ptr approach:
+        // a b c a b c
+        // i    j
+        // i     j
+        // say now you slide i coz you have count>0 for each char, but if you slide i then would you be able to include the substring abcabc in the ans?
+
         //M2: optimal   
         int count=0;
         int la=-1, lb=-1, lc=-1;
