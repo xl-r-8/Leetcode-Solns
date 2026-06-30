@@ -1,3 +1,50 @@
+// class Solution {
+// public:
+// //sol1: brute: O(n^3)
+//     int numberOfSubstrings(string s) {
+//         int n=s.size();
+//         int count=0;
+
+//         for(int i=0; i<n; i++){
+//             for(int j=i; j<n; j++){
+
+//                 bool a=false, b=false, c=false;
+
+//                 for(int k=i; k<=j; k++){
+//                     if(s[k]=='a') a=true;
+//                     else if(s[k]=='b') b=true;
+//                     else if(s[k]=='c') c=true;
+//                 }
+
+//                 if(a && b && c) count++;
+//             }
+//         }
+
+//         return count;
+//     }
+// };
+/* class Solution {
+public:
+//O(N^2)
+//sol1: better, optimal and explanation already submitted earlier
+    int numberOfSubstrings(string s) {
+        int n=s.size();
+        int count=0;
+
+        for(int i=0; i<n; i++){
+
+            int freq[3]={0};
+
+            for(int j=i; j<n; j++){
+                freq[s[j]-'a']++;
+
+                if(freq[0] && freq[1] && freq[2])count++;
+            }
+        }
+
+        return count;
+    }
+}; */
 class Solution {
 public:
 //sol 3: optimal
