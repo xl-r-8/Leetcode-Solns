@@ -1,6 +1,23 @@
 #define ll long long
 const int MOD = 1e9 + 7;
 
+// It means (a^n) % mod, TC=O(log2 n), SC=O(1)
+// Binary Exponentiation
+ll modPow(ll a, ll n, ll mod) {
+    ll res = 1;
+    while (n) {
+        if (n % 2 == 1){
+            res = (res * a) % mod;
+            n--;
+        } 
+        else{
+            a = (a*a)%mod;
+            n = n/2;
+        }
+    }
+    return res;
+}
+
 class Solution {
 public:
     int bs(int low, int high, int mn, int target, vector<int> &nums){
