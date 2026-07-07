@@ -10,7 +10,9 @@ public:
             }
             else{
                 a = a*a;
-                n=n/2;
+                n=n/2; //or n >> 1;
+                // >>1 right shift: divide by 2
+                // <<1 left shift: multiply by 2
             }
         }
         return res;
