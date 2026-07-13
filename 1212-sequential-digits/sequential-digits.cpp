@@ -1,5 +1,6 @@
 class Solution {
 public:
+// summarize and save it
     void rec(int num, int low, int high, vector<int>& ans){
         int ld = num%10;
         if( num >= low and num <= high ) ans.push_back(num);
