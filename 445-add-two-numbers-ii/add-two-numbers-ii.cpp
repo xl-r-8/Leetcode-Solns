@@ -28,7 +28,7 @@ public:
         }
 
         int cy = 0;//can take values 0 or 1
-        ListNode* dummyNode = new ListNode(-1);//instead of -1 Node we can create a dummyNode of nullptr, no its not a dummyNode of nullptr, its a dummyNode of 0
+        ListNode* dummyNode = new ListNode(-1);//instead of -1 Node we can create a dummyNode of nullptr, no (ListNode(0))its not a dummyNode of nullptr, its a dummyNode of 0
         //when Node* when Node and when -> when .? wdym by new Node?
 
         while(!s1.empty() or !s2.empty() or cy>0){
@@ -44,6 +44,7 @@ public:
                 sum += temp2->val;
             } 
 
+            //instead of reversing in the end, we can just create 2 nodes and reverse the links from there on only
             ListNode* newNode = new ListNode(sum%10);
             if(dummyNode->val == -1) newNode->next = nullptr;
             else newNode->next = dummyNode;
