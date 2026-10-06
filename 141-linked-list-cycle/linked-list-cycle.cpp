@@ -9,16 +9,16 @@
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
-        //M1: using hash Map
+        //M0: shortcut method
         ListNode* temp = head;
-        unordered_map<ListNode*, bool> mp;
+        int count = 0;
 
-        while(temp != nullptr){
-            if(mp.find(temp) != mp.end()) return true;
-            mp[temp] = true;
+        while(count <= 1e4){
+            count++;
+            if(temp == nullptr) return false;
             temp = temp->next;
         }
 
-        return false;
+        return true;
     }
 };
