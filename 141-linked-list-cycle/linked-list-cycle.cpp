@@ -9,17 +9,17 @@
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
-        //M0: shortcut method
-        //see traversal in cyclic list would go on for infinity. so if you count then it would definitely exceed the num of possible nodes that the given structure can maximally hold. and for acyclic lists it would have less than 10^4 nodes and temp would reach nullptr before count exceeds 10^4
-        ListNode* temp = head;
-        int count = 0;
+        //M2: tortoise hare method or floyd method
+        ListNode* slow = head;
+        ListNode* fast = head;
+        
+        while(fast != nullptr and fast->next != nullptr){
+            slow = slow->next;
+            fast = fast->next->next;
 
-        while(count <= 1e4){
-            count++;
-            if(temp == nullptr) return false;
-            temp = temp->next;
+            if(slow == fast) return true;
         }
 
-        return true;
+        return false;
     }
 };
