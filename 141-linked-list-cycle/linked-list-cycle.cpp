@@ -9,16 +9,16 @@
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
-        //M3: tortoise - rabbit method
-        if(head == nullptr or head->next == nullptr) return false;
-        ListNode* tortoise = head;
-        ListNode* rabbit = head->next;
-        while( rabbit != nullptr ){
-            if(tortoise == rabbit) return true;
-            tortoise = tortoise->next;
-            if(rabbit->next == nullptr or rabbit->next->next == nullptr) break;
-            rabbit = rabbit->next->next;
+        //M1: using hash Map
+        ListNode* temp = head;
+        unordered_map<ListNode*, bool> mp;
+
+        while(temp != nullptr){
+            if(mp.find(temp) != mp.end()) return true;
+            mp[temp] = true;
+            temp = temp->next;
         }
+
         return false;
-    } 
+    }
 };
