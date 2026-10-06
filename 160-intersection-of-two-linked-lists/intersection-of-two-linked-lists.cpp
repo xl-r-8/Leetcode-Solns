@@ -11,8 +11,8 @@ public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
         //M1: storing in map/set
         //N1: num of nodes in LL1
-        //TC= , SC=
-
+        //TC=O(N1+N2) , SC=O(N1), SC can also be O(N2) if we store List 2 in map instead of list 1
+    
         unordered_map<ListNode*, bool> mp; //cant do <int, bool> coz values might repeat
 
         ListNode* temp1 = headA;
