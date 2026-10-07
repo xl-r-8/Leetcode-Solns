@@ -9,17 +9,24 @@
 class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
-        //M1: hash map or can use set too
-
-        ListNode* temp = head;
-        unordered_map<ListNode*, bool> mp;
+        //M2: tortoise hare method or floyd method
+        ListNode* slow = head;
+        ListNode* fast = head;
+        
+        while(fast != nullptr and fast->next != nullptr){
+            slow = slow->next;
+            fast = fast->next->next;
  
-        while(temp != nullptr){
-            if(mp.find(temp) != mp.end()) return temp;
-            mp[temp] = true;
-            temp = temp->next;
+            if(slow == fast) break;
         }
- 
-        return nullptr;
+        if(fast == nullptr or fast->next == nullptr) return nullptr;
+
+        slow = head;
+        while(slow != fast){
+            slow = slow->next;
+            fast = fast->next;
+        }
+
+        return fast;
     }
 };
