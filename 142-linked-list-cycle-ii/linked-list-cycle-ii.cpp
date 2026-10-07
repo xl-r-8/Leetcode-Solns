@@ -9,17 +9,17 @@
 class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
-        //M1: using visited: SC = O(n), but can we do without visited?
-        unordered_set<ListNode*> st;
+        //M1: hash map or can use set too
+
         ListNode* temp = head;
-        while( temp != nullptr ){
-            // cout<<temp->val<<endl;
-            if( st.find(temp) != st.end() ){
-                return temp;
-            }
-            st.insert(temp);
-            temp=temp->next;
+        unordered_map<ListNode*, bool> mp;
+ 
+        while(temp != nullptr){
+            if(mp.find(temp) != mp.end()) return temp;
+            mp[temp] = true;
+            temp = temp->next;
         }
+ 
         return nullptr;
     }
 };
