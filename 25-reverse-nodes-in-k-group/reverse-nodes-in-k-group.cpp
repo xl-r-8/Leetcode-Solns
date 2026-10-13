@@ -33,9 +33,9 @@ public:
     ListNode* reverseKGroup(ListNode* head, int k) {
         ListNode* temp = head;
         ListNode* grpHead = temp;
-        ListNode* grpTail = nullptr;
+        ListNode* grpTail;
         int count = 0; 
-        ListNode* nextGrpNode = temp;
+        ListNode* nextGrpNode;
         ListNode* prevGrpNode = nullptr;
         while(temp != nullptr){
             count++;
