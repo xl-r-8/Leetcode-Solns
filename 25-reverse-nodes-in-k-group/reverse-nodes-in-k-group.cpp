@@ -31,6 +31,9 @@ public:
         return head;
     }
     ListNode* reverseKGroup(ListNode* head, int k) {
+        //M1: iterative approache
+        //TC = O(N), SC = O(1)
+        
         ListNode* temp = head;
         ListNode* grpHead = temp;
         ListNode* grpTail;
@@ -40,14 +43,17 @@ public:
         while(temp != nullptr){
             count++;
             if(count == k){
+                //step1: separate group of k nodes
                 nextGrpNode = temp->next;
                 grpTail = temp; 
                 grpTail->next = nullptr;
                 if(prevGrpNode) prevGrpNode->next = nullptr;
                 else head = grpTail;
                 
+                //step2: reverse the separated grp
                 reverseList(grpHead);
 
+                //step3: reconnect the reversed grp
                 if(prevGrpNode)prevGrpNode->next = grpTail;
                 grpHead->next = nextGrpNode;
                 prevGrpNode = grpHead;
