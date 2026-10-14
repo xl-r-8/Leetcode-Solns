@@ -11,73 +11,26 @@
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        ListNode* head=nullptr;
-        if(list1==nullptr and list2==nullptr) return head;
-        if(list1==nullptr) return list2;
-        if(list2==nullptr) return list1;
-        ListNode* temp1=list1;
-        ListNode* temp2=list2;
-        ListNode* temp=nullptr;
-        while(temp1!=nullptr and temp2!=nullptr){
-            if(temp1->val<=temp2->val){
-                ListNode* p=new ListNode(temp1->val);
-                if(head==nullptr){
-                    head=p;
-                    temp=head;
-                }
-                else{
-                    temp->next=p;
-                    temp=temp->next;
-                }
-                temp1=temp1->next;
+        //M2: optimal 2 ptr approach -> tampering with the given INPUT lists
+        //TC = O(m+n), SC = O(1) 
+        
+        ListNode* dummyNode = new ListNode(-1);
+        ListNode* temp = dummyNode;
+        while(list1 != nullptr and list2 != nullptr){ //when both temps are non NULL
+            if(list1->val <= list2->val){
+                temp->next = list1;
+                list1 = list1->next;
             }
             else{
-                ListNode* p=new ListNode(temp2->val);
-                if(head==nullptr){
-                    head=p;
-                    temp=head;
-                }
-                else{
-                    temp->next=p;
-                    temp=temp->next;
-                }
-                temp2=temp2->next;
+                temp->next = list2;
+                list2 = list2->next;
             }
+            temp = temp->next;
+            temp->next = nullptr;//not needed, as in the next iteration it will be automatically changed
         }
-        
-        //M1: while loop
-        // while(temp1!=nullptr){
-        //     ListNode* p=new ListNode(temp1->val);
-        //     if(head==nullptr){
-        //         head=p;
-        //         temp=head;
-        //     }
-        //     else{
-        //         temp->next=p;
-        //         temp=temp->next;
-        //     }
-        //     temp1=temp1->next;
-        // }
 
-        // while(temp2!=nullptr){
-        //     ListNode* p=new ListNode(temp2->val);
-        //     if(head==nullptr){
-        //         head=p;
-        //         temp=head;
-        //     }
-        //     else{
-        //         temp->next=p;
-        //         temp=temp->next;
-        //     }
-        //     temp2=temp2->next;
-        // }
-
-        //M2: direct if-else
-        if (temp1 != nullptr) {
-            temp->next = temp1;
-        } else {
-            temp->next = temp2;
-        }
-        return head;
+        //if list1 is still not null so list2 is null therefore attach remaining list1
+        temp->next = (list1 != nullptr)? list1 : list2;
+        return dummyNode->next;
     }
 };
