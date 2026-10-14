@@ -11,26 +11,39 @@
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        //M2: optimal 2 ptr approach -> tampering with the given INPUT lists
-        //TC = O(m+n), SC = O(1) 
+        //M1: using external array to store sort and make list
+        //TC = O(m+n log(m+n)), SC = O(m+n) 
         
-        ListNode* dummyNode = new ListNode(-1);
-        ListNode* temp = dummyNode;
-        while(list1 != nullptr and list2 != nullptr){ //when both temps are non NULL
-            if(list1->val <= list2->val){
-                temp->next = list1;
-                list1 = list1->next;
+        vector<int> v;
+        ListNode* temp1 = list1;
+        ListNode* temp2 = list2;
+
+        //O(m+n)
+        while(temp1 != nullptr or temp2 != nullptr){
+            int ele1 = (temp1 == nullptr)? INT_MAX : temp1->val;
+            int ele2 = (temp2 == nullptr)? INT_MAX : temp2->val;
+
+            if(ele1 <= ele2) {
+                v.push_back(ele1);
+                temp1 = temp1->next;
             }
             else{
-                temp->next = list2;
-                list2 = list2->next;
+                v.push_back(ele2);
+                temp2 = temp2->next;
             }
-            temp = temp->next;
-            temp->next = nullptr;//not needed, as in the next iteration it will be automatically changed
         }
 
-        //if list1 is still not null so list2 is null therefore attach remaining list1
-        temp->next = (list1 != nullptr)? list1 : list2;
+        //O(m+n log(m+n))
+        sort(v.begin(), v.end());
+
+        //O(m+n)
+        ListNode* dummyNode = new ListNode(-1);
+        ListNode* temp = dummyNode;
+        for(int i = 0; i<v.size(); i++){
+            temp->next = new ListNode(v[i]);
+            temp = temp->next;
+        }
+
         return dummyNode->next;
     }
 };
