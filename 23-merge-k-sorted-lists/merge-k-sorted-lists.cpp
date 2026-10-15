@@ -28,6 +28,20 @@ public:
         return dummyNode->next;
     }
     ListNode* mergeKLists(vector<ListNode*>& lists) {
+        //M1: brute force
+        //{l1, l2, ..., lk} k sorted list
+        //eg: k = 5
+        //{l1, l2, l3, l4, l5} 5 sorted lists
+        //l1 = merge(l1, l2); use merge2list to merge the 2 sorted lists l1 and l2 such that the resultant list is also sorted and name the result list as l1
+        //{l1, l3, l4, l5}
+        //l1 = merge(l1, l3)
+        //{l1, l4, l5}
+        //l1 = merge(l1, l4)
+        //{l1, l5}
+        //l1 = merge(l1, l5)
+        //{l1}
+        // return l1;
+        
         if(lists.empty()) return nullptr;
         ListNode* l1 = lists[0];
 
