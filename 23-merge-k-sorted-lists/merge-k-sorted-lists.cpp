@@ -41,7 +41,9 @@ public:
         //l1 = merge(l1, l5)
         //{l1}
         // return l1;
-        
+        //if there are n lists and every list has m nodes
+        //TC = O(n*m), for each merge you would at least traverse m nodes
+        //SC = O(1), coz we are not using external space and changing the given input LLs only
         if(lists.empty()) return nullptr;
         ListNode* l1 = lists[0];
 
