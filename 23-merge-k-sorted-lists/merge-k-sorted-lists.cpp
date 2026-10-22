@@ -10,47 +10,35 @@
  */
 class Solution {
 public:
-    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        ListNode* dummyNode = new ListNode(-1);
-        ListNode* temp = dummyNode;
-        while(list1 != nullptr and list2 != nullptr){ 
-            if(list1->val <= list2->val){
-                temp->next = list1;
-                list1 = list1->next;
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        // M1: using external array
+        // TC: O(N + NlogN + N)
+        // SC: O(N)
+
+        vector<int> arr;
+
+        // Step 1: Store all node values in the array
+        for (ListNode* head : lists) {
+            ListNode* temp = head;
+
+            while (temp != nullptr) {
+                arr.push_back(temp->val);
+                temp = temp->next;
             }
-            else{
-                temp->next = list2;
-                list2 = list2->next;
-            }
+        }
+
+        // Step 2: Sort all values
+        sort(arr.begin(), arr.end());
+
+        // Step 3: Construct a new sorted linked list
+        ListNode dummyNode(-1);
+        ListNode* temp = &dummyNode;
+
+        for (int val : arr) {
+            temp->next = new ListNode(val);
             temp = temp->next;
         }
-        temp->next = (list1 != nullptr)? list1 : list2;
-        return dummyNode->next;
-    }
-    ListNode* mergeKLists(vector<ListNode*>& lists) {
-        //M4: divide and conquer
-        //TC:O(K logK + N logK)
-        //SC:O(K)
 
-        queue<ListNode*> q; //SC = O(K)
-        //O(K logK)
-        for(int i = 0; i<lists.size(); i++){
-            if(lists[i] != nullptr) q.push(lists[i]);
-        }
-        
-        //O(N logK)
-        while(q.size()>1){
-            ListNode* list1 = q.front(); q.pop();
-            if(q.empty()){
-                q.push(list1);
-                break;
-            }
-            ListNode* list2 = q.front(); q.pop();
-            ListNode* newList = mergeTwoLists(list1, list2);
-            q.push(newList);
-        }
-
-        if(q.empty()) return nullptr;
-        return q.front();
+        return dummyNode.next;
     }
 };
