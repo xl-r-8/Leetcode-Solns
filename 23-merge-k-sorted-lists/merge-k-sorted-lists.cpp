@@ -29,14 +29,16 @@ public:
     }
     ListNode* mergeKLists(vector<ListNode*>& lists) {
         //M4: divide and conquer
-        //TC:
-        //SC:
+        //TC:O(K logK + N logK)
+        //SC:O(K)
 
-        queue<ListNode*> q;
+        queue<ListNode*> q; //SC = O(K)
+        //O(K logK)
         for(int i = 0; i<lists.size(); i++){
             if(lists[i] != nullptr) q.push(lists[i]);
         }
         
+        //O(N logK)
         while(q.size()>1){
             ListNode* list1 = q.front(); q.pop();
             if(q.empty()){
