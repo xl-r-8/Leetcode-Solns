@@ -12,8 +12,8 @@ class Solution {
 public:
 
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        ListNode* dummyNode = new ListNode(-1);
-        ListNode* temp = dummyNode;
+        ListNode dummyNode(-1);//stack allocated dummy node
+        ListNode* temp = &dummyNode;
 
         while(list1 != nullptr and list2 != nullptr){ 
             if(list1->val <= list2->val){
@@ -27,7 +27,7 @@ public:
             temp = temp->next;
         }
         temp->next = (list1 != nullptr)? list1 : list2;
-        return dummyNode->next;
+        return dummyNode.next;
     }
 
     ListNode* middleOfLinkedList(ListNode* head) {
