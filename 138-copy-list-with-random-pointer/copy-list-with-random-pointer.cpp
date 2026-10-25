@@ -18,12 +18,13 @@ class Solution {
 public:
     Node* copyRandomList(Node* head) {
         //M2: using the given list 
-        //TC: O(2N)
+        //TC: O(3N)
         //SC: O(N), deep-copied list(it's ans so ask interviewer)
         if(head == nullptr) return nullptr;
 
         Node* temp = head;
 
+        //O(N)
         while(temp != nullptr){
             Node* newNode = new Node(temp->val);
             newNode->next = temp->next;
@@ -33,6 +34,8 @@ public:
 
         temp = head;
         Node* head2 = head->next;
+        //O(N)
+        //have to initialize all the node->random ptrs before correcting temp->next and node->next ptrs : see an eg to understand clearly
         while(temp != nullptr){
             Node* node = temp->next;
 
@@ -44,6 +47,7 @@ public:
         }
 
         temp = head;
+        //O(N)
         while(temp != nullptr){
             Node* node = temp->next;
 
