@@ -17,35 +17,44 @@ public:
 class Solution {
 public:
     Node* copyRandomList(Node* head) {
-        //M1: using map 
+        //M2: using the given list 
+        //TC: O(2N)
+        //SC: O(N), deep-copied list(it's ans so ask interviewer)
         if(head == nullptr) return nullptr;
-
-        unordered_map<Node*, Node*> mp;
-        Node* dummyNode = new Node(-1);
 
         Node* temp = head;
 
         while(temp != nullptr){
             Node* newNode = new Node(temp->val);
-            mp[temp] = newNode;
-            temp = temp->next;
+            newNode->next = temp->next;
+            temp->next = newNode;
+            temp = newNode->next;
         }
-
-        Node* head2 = mp[head];
 
         temp = head;
-
+        Node* head2 = head->next;
         while(temp != nullptr){
-            Node* nextTemp = temp->next;
-            Node* randTemp = temp->random;
+            Node* node = temp->next;
 
-            Node* node = mp[temp];
-            if(nextTemp != nullptr) node->next = mp[nextTemp];
-            if(randTemp != nullptr) node->random = mp[randTemp];
-            temp = temp->next;
+            Node* tempRandom = temp->random;
+            Node* nodeRandom = (tempRandom == nullptr)? nullptr: tempRandom->next;
+            node->random = nodeRandom;
+
+            temp = node->next;
         }
 
-        return head2;
+        temp = head;
+        while(temp != nullptr){
+            Node* node = temp->next;
+
+            Node* tempNext = node->next;
+            Node* nodeNext = (tempNext == nullptr)? nullptr: tempNext->next;
+            node->next = nodeNext;
+            temp->next = tempNext;
+
+            temp = temp->next;
+        }
         
+        return head2;
     }
 };
